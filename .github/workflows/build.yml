@@ -66,6 +66,7 @@ on:
         - ZTE-E8820S
         - ZTE-E8820V2
         - ZTT-RX6000
+        - MI-NANO
         default: K2P
       toolchain:
         description: 'Select the compilation toolchain'
@@ -174,13 +175,13 @@ jobs:
           echo "wifi5gssid=${{fromJson(inputs.customization).wifi5gssid}}" >> $GITHUB_ENV
           echo "wifi5gpsk=${{fromJson(inputs.customization).wifi5gpsk}}" >> $GITHUB_ENV
           # plugins
-          echo "ss=${{fromJson(inputs.plugins).ss}}" >> $GITHUB_ENV
-          echo "v2ray=${{fromJson(inputs.plugins).v2ray}}" >> $GITHUB_ENV
-          echo "xray=${{fromJson(inputs.plugins).xray}}" >> $GITHUB_ENV
-          echo "trojan=${{fromJson(inputs.plugins).trojan}}" >> $GITHUB_ENV
-          echo "ssobfs=${{fromJson(inputs.plugins).ssobfs}}" >> $GITHUB_ENV
-          echo "smartdns=${{fromJson(inputs.plugins).smartdns}}" >> $GITHUB_ENV
-          echo "vlmcsd=${{fromJson(inputs.plugins).vlmcsd}}" >> $GITHUB_ENV
+          # echo "ss=${{fromJson(inputs.plugins).ss}}" >> $GITHUB_ENV
+          # echo "v2ray=${{fromJson(inputs.plugins).v2ray}}" >> $GITHUB_ENV
+          # echo "xray=${{fromJson(inputs.plugins).xray}}" >> $GITHUB_ENV
+          # echo "trojan=${{fromJson(inputs.plugins).trojan}}" >> $GITHUB_ENV
+          # echo "ssobfs=${{fromJson(inputs.plugins).ssobfs}}" >> $GITHUB_ENV
+          # echo "smartdns=${{fromJson(inputs.plugins).smartdns}}" >> $GITHUB_ENV
+          # echo "vlmcsd=${{fromJson(inputs.plugins).vlmcsd}}" >> $GITHUB_ENV
           echo "ttyd=${{fromJson(inputs.plugins).ttyd}}" >> $GITHUB_ENV
           echo "iperf3=${{fromJson(inputs.plugins).iperf3}}" >> $GITHUB_ENV
       - name: Compile the nano version
@@ -207,19 +208,19 @@ jobs:
           fi
           cp -f configs/templates/${{ matrix.target }}.config .config
           # include plugin
-          echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=${{env.ss}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=${{env.v2ray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_XRAY=${{env.xray}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=${{env.trojan}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=${{env.ssobfs}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=${{env.smartdns}}" >> .config
-          echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=${{env.vlmcsd}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=${{env.ss}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=${{env.v2ray}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_XRAY=${{env.xray}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=${{env.trojan}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=${{env.ssobfs}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=${{env.smartdns}}" >> .config
+          # echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=${{env.vlmcsd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_TTYD=${{env.ttyd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=${{env.iperf3}}" >> .config
           # cpufreq
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
             echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
-            echo "CONFIG_FIRMWARE_MT7621_OC=${{ inputs.mt7621_oc }}" >> .config
+            echo "CONFIG_FIRMWARE_MT7628_OC=${{ inputs.mt7628_oc }}" >> .config
           fi
       - name: Start build firmware
         run: |
@@ -231,7 +232,7 @@ jobs:
           fi
           cpufreq=""
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
-            cpufreq="-cpufreq-${{ inputs.mt7621_oc }}"
+            cpufreq="-cpufreq-${{ inputs.mt7628_oc }}"
           fi
           mkdir -p ${{ env.TRUNK_DIR }}/firmwares/
           sudo mv ${{ env.TRUNK_DIR }}/images/*.trx ${{ env.TRUNK_DIR }}/firmwares/$FIRMWARE_AUTHOR-${{ matrix.target }}-4.4-${{ matrix.toolchaingcc }}${nano}${cpufreq}-${{ env.Compilation_time }}.trx
