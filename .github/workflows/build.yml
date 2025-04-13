@@ -67,7 +67,7 @@ on:
         - ZTE-E8820V2
         - ZTT-RX6000
         - MI-NANO
-        default: K2P
+        default: MI-NANO
       toolchain:
         description: 'Select the compilation toolchain'
         required: true
@@ -172,8 +172,8 @@ jobs:
           echo "signpassword=${{fromJson(inputs.customization).signpassword}}" >> $GITHUB_ENV
           echo "wifi2gssid=${{fromJson(inputs.customization).wifi2gssid}}" >> $GITHUB_ENV
           echo "wifi2gpsk=${{fromJson(inputs.customization).wifi2gpsk}}" >> $GITHUB_ENV
-          echo "wifi5gssid=${{fromJson(inputs.customization).wifi5gssid}}" >> $GITHUB_ENV
-          echo "wifi5gpsk=${{fromJson(inputs.customization).wifi5gpsk}}" >> $GITHUB_ENV
+          # echo "wifi5gssid=${{fromJson(inputs.customization).wifi5gssid}}" >> $GITHUB_ENV
+          # echo "wifi5gpsk=${{fromJson(inputs.customization).wifi5gpsk}}" >> $GITHUB_ENV
           # plugins
           # echo "ss=${{fromJson(inputs.plugins).ss}}" >> $GITHUB_ENV
           # echo "v2ray=${{fromJson(inputs.plugins).v2ray}}" >> $GITHUB_ENV
@@ -235,7 +235,7 @@ jobs:
             cpufreq="-cpufreq-${{ inputs.mt7621_oc }}"
           fi
           mkdir -p ${{ env.TRUNK_DIR }}/firmwares/
-          sudo mv ${{ env.TRUNK_DIR }}/images/*.trx ${{ env.TRUNK_DIR }}/firmwares/$FIRMWARE_AUTHOR-${{ matrix.target }}-4.4-${{ matrix.toolchaingcc }}${nano}${cpufreq}-${{ env.Compilation_time }}.trx
+          sudo mv ${{ env.TRUNK_DIR }}/images/*.trx ${{ env.TRUNK_DIR }}/firmwares/$FIRMWARE_AUTHOR-${{ matrix.target }}-3.4-${{ matrix.toolchaingcc }}${nano}${cpufreq}-${{ env.Compilation_time }}.trx
       - uses: actions/upload-artifact@main
         with:
           name: ${{ matrix.target }}-${{ matrix.toolchaingcc }}
