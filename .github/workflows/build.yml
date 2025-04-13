@@ -126,7 +126,7 @@ env:
   FIRMWARE_AUTHOR: TurBoTse
   FIRMWARE_BRANCH: main
   FIRMWARE_REPO: padavan
-  FIRMWARE_URL: https://github.com/TurBoTse/padavan.git
+  FIRMWARE_URL: https://github.com/asanfang/padavan-tsl0922/padavan.git
   TOOLCHAIN_ROOT: toolchain/toolchain-mipsel
   TOOLCHAIN_URL: https://github.com/TurBoTse/padavan/releases/download/toolchain
 jobs:
@@ -220,7 +220,7 @@ jobs:
           # cpufreq
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
             echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
-            echo "CONFIG_FIRMWARE_MT7628_OC=${{ inputs.mt7628_oc }}" >> .config
+            echo "CONFIG_FIRMWARE_MT7621_OC=${{ inputs.mt7621_oc }}" >> .config
           fi
       - name: Start build firmware
         run: |
@@ -232,7 +232,7 @@ jobs:
           fi
           cpufreq=""
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
-            cpufreq="-cpufreq-${{ inputs.mt7628_oc }}"
+            cpufreq="-cpufreq-${{ inputs.mt7621_oc }}"
           fi
           mkdir -p ${{ env.TRUNK_DIR }}/firmwares/
           sudo mv ${{ env.TRUNK_DIR }}/images/*.trx ${{ env.TRUNK_DIR }}/firmwares/$FIRMWARE_AUTHOR-${{ matrix.target }}-4.4-${{ matrix.toolchaingcc }}${nano}${cpufreq}-${{ env.Compilation_time }}.trx
