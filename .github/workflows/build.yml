@@ -125,7 +125,7 @@ on:
 env:
   FIRMWARE_AUTHOR: TurBoTse
   FIRMWARE_BRANCH: main
-  FIRMWARE_REPO: rt-n56u
+  FIRMWARE_REPO: padavan
   FIRMWARE_URL: https://github.com/asanfang/padavan.git
   TOOLCHAIN_ROOT: toolchain/toolchain-mipsel
   TOOLCHAIN_URL: https://github.com/TurBoTse/padavan/releases/download/toolchain
